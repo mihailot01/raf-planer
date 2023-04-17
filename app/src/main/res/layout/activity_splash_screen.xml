@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="?colorAccent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:text="RAF planer"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:fontFamily="@font/poppinsbold"
+        android:shadowDx="5"
+        android:shadowDy="4"
+        android:shadowColor="#44000000"
+        android:shadowRadius="20"
+        />
+</LinearLayout>

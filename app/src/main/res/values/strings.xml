@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Raf planer</string>
+    <string name="login">Prijavi se</string>
+    <string name="logout">Odjavi se</string>
+    <string name="password">Lozinka</string>
+    <string name="username">Korisničko ime</string>
+    <string name="email">Email</string>
+    <string name="calendar">Kalendar</string>
+    <string name="daily_plan">Dnevni plan</string>
+    <string name="profile">Profil</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
