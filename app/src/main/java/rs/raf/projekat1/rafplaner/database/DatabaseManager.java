@@ -1,8 +1,19 @@
 package rs.raf.projekat1.rafplaner.database;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import rs.raf.projekat1.rafplaner.model.Priority;
+import rs.raf.projekat1.rafplaner.model.Task;
 
 public class DatabaseManager {
 
@@ -20,5 +31,82 @@ public class DatabaseManager {
         database.insert(DatabaseModel.UserEntry.TABLE_NAME, null, contentValue);
     }
 
+    public void insertTask(Task task) {
+        ContentValues contentValue = new ContentValues();
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_TITLE, task.getTitle());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_DESCRIPTION, task.getDescription());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_DATE, task.getDate().getTime());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_START_TIME, task.getStartTime().getTime());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_END_TIME, task.getEndTime().getTime());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_PRIORITY, task.getPriority().toString());
+        database.insert(DatabaseModel.TaskEntry.TABLE_NAME, null, contentValue);
+    }
+
+
+    public List<Task> getAllTasks() {
+
+
+        Log.d("TEST", "getAllTasks: USO U METODU");
+        List<Task> list = new ArrayList<>();
+
+        //String[] columns = new String[]{DatabaseModel.TaskEntry._ID, DatabaseModel.TaskEntry.COLUMN_TITLE, DatabaseModel.TaskEntry.COLUMN_DESCRIPTION, DatabaseModel.TaskEntry.COLUMN_DATE, DatabaseModel.TaskEntry.COLUMN_START_TIME, DatabaseModel.TaskEntry.COLUMN_END_TIME, DatabaseModel.TaskEntry.COLUMN_PRIORITY};
+        Cursor cursor = database.query(DatabaseModel.TaskEntry.TABLE_NAME, null, null, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        Log.d("TEST", "getAllTasks: CURSOR Count: " + cursor.getCount());
+        if (cursor == null || cursor.getCount() == 0)
+        {
+            Log.d("TEST", "getAllTasks: CURSOR NULL");
+            insertMockTasks();
+            Log.d("TEST", "getAllTasks: PROSO INSERT MOCK");
+            return getAllTasks();
+        }
+        cursor.moveToFirst();
+        do {
+                list.add(getTaskFromCursor(cursor));
+        }   while (cursor.moveToNext());
+
+
+
+        cursor.close();
+        return list;
+    }
+    @SuppressLint("Range")
+
+    private Task getTaskFromCursor(Cursor cursor){
+        int id = cursor.getInt(cursor.getColumnIndex(DatabaseModel.TaskEntry._ID));
+        String title = cursor.getString(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_TITLE));
+        String description = cursor.getString(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_DESCRIPTION));
+        Date date = new Date(cursor.getLong(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_DATE)));
+        Date startTime = new Date(cursor.getLong(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_START_TIME)));
+        Date endTime = new Date(cursor.getLong(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_END_TIME)));
+        Priority priority = Priority.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_PRIORITY)));
+        Log.d("TEST", "getTaskFromCursor: "+title);
+        return new Task(id, title, description, date, startTime, endTime, priority);
+    }
+
+    public void insertMockTasks(){
+
+        List<Task> list = new ArrayList<>();
+        list.add(new Task(1,"low task", "description", new Date(), new Date(), new Date(), Priority.LOW));
+        list.add(new Task(2,"high task", "description2", new Date(), new Date(), new Date(), Priority.HIGH));
+        list.add(new Task(3,"low task 2", "description", new Date(), new Date(), new Date(), Priority.LOW));
+        list.add(new Task(4,"high task 2", "description2", new Date(), new Date(), new Date(), Priority.HIGH));
+        list.add(new Task(5,"medium task", "description", new Date(), new Date(), new Date(), Priority.MEDIUM));
+        for(Task task : list){
+            insertTask(task);
+        }
+    }
+    public Task getTaskById(int id) {
+        Cursor cursor = database.query(DatabaseModel.TaskEntry.TABLE_NAME, null, "DatabaseModel.TaskEntry._ID = ?", new String[]{String.valueOf(id)}, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        else
+            return null;
+
+        return getTaskFromCursor(cursor);
+
+    }
 
 }

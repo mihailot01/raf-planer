@@ -1,4 +1,4 @@
-package rs.raf.projekat1.rafplaner.activities.fragments;
+package rs.raf.projekat1.rafplaner.view.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,12 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import rs.raf.projekat1.rafplaner.R;
-import rs.raf.projekat1.rafplaner.activities.LoginActivity;
-import rs.raf.projekat1.rafplaner.activities.SplashScreenActivity;
-import rs.raf.projekat1.rafplaner.databinding.FragmentCalendarBinding;
-
 import rs.raf.projekat1.rafplaner.databinding.FragmentProfileBinding;
+import rs.raf.projekat1.rafplaner.view.activities.LoginActivity;
+import rs.raf.projekat1.rafplaner.databinding.FragmentCalendarBinding;
 
 public class ProfileFragment extends Fragment {
 

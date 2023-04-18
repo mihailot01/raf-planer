@@ -8,19 +8,19 @@
 
 <fragment
         android:id="@+id/navigation_calendar"
-        android:name="rs.raf.projekat1.rafplaner.activities.fragments.CalendarFragment"
+        android:name="rs.raf.projekat1.rafplaner.view.fragments.CalendarFragment"
         android:label="@string/calendar"
         tools:layout="@layout/fragment_calendar" />
 
     <fragment
         android:id="@+id/navigation_daily_plan"
-        android:name="rs.raf.projekat1.rafplaner.activities.fragments.DailyPlanFragment"
+        android:name="rs.raf.projekat1.rafplaner.view.fragments.DailyPlanFragment"
         android:label="@string/daily_plan"
         tools:layout="@layout/fragment_daily_plan" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="rs.raf.projekat1.rafplaner.activities.fragments.ProfileFragment"
+        android:name="rs.raf.projekat1.rafplaner.view.fragments.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

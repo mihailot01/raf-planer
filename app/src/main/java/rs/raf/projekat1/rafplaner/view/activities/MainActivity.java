@@ -1,4 +1,4 @@
-package rs.raf.projekat1.rafplaner.activities;
+package rs.raf.projekat1.rafplaner.view.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
