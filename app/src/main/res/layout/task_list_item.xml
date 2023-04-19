@@ -11,22 +11,37 @@
     android:focusable="true"
     tools:background="#aaa"
     android:padding="8dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    >
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linear1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/taskImg"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingVertical="8dp">
         <TextView
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/txtTaskListItemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:fontFamily="@font/poppinssemibold"/>
+
+        <TextView
+            app:layout_constraintLeft_toRightOf="@id/txtTaskListItemTitle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/txtTaskListItemTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppinsregular" />
 
 
 <!--        <LinearLayout-->
@@ -48,17 +63,41 @@
 <!--                android:text="Poslednji pristup" />-->
 <!--        </LinearLayout>-->
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/taskImg"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/linear1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/ic_launcher_foreground" />
+        android:src="@drawable/ic_task_foreground" />
      />
+
+    <ImageButton
+        android:id="@+id/deleteBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintRight_toLeftOf="@id/editBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="0dp"
+        android:src="@drawable/ic_delete_foreground"
+        android:scaleType="fitCenter"
+        />
+    />
+    <ImageButton
+        android:id="@+id/editBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="0dp"
+        android:src="@drawable/ic_edit_foreground"
+        android:scaleType="fitCenter"
+        />
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

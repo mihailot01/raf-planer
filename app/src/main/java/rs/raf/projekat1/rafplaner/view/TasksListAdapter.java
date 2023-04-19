@@ -2,13 +2,18 @@ package rs.raf.projekat1.rafplaner.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,11 +23,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import rs.raf.projekat1.rafplaner.HelperFunctions;
 import rs.raf.projekat1.rafplaner.model.Task;
 
 import rs.raf.projekat1.rafplaner.R;
+import rs.raf.projekat1.rafplaner.view.activities.TaskFormActivity;
 import rs.raf.projekat1.rafplaner.view.activities.TaskPreviewActivity;
 import rs.raf.projekat1.rafplaner.view.fragments.TaskPreviewFragment;
 
@@ -55,24 +63,50 @@ public abstract class TasksListAdapter extends ListAdapter<Task, TasksListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Resources res = holder.itemView.getContext().getResources();
         Task task = getItem(position);
         holder.tvTitle.setText(task.getTitle());
+        holder.tvTime.setText(HelperFunctions.getFormattedTime(task.getStartTime()) + " - " + HelperFunctions.getFormattedTime(task.getEndTime()));
+//        holder.ivPriority.setBackgroundColor(HelperFunctions.getPriorityColor(task.getPriority()));
+//        ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(Color.parseColor("#80000000");
+        holder.ivPriority.setImageTintList(null);
+        holder.ivPriority.setImageTintList(ColorStateList.valueOf(res.getColor(HelperFunctions.getPriorityColor(task.getPriority()))));
+        holder.ivPriority.setBackgroundTintList(ColorStateList.valueOf(HelperFunctions.getPriorityColor(task.getPriority())));
         holder.getRoot().setOnClickListener(v -> {
-            this.onTaskClick(position);
+            this.onTaskClick(task);
+        });
+
+        holder.btnDelete.setOnClickListener(v -> {
+            this.onDeleteClick(task);
+        });
+        holder.btnEdit.setOnClickListener(v -> {
+            this.onEditClick(task);
         });
     }
 
-    public abstract void onTaskClick(int position);
+    public abstract void onTaskClick(Task task);
 
+    public abstract void onDeleteClick(Task task);
+
+    public abstract void onEditClick(Task task);
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvTitle;
+        private TextView tvTime;
+        private ImageView ivPriority;
+
+        private ImageButton btnDelete;
+        private ImageButton btnEdit;
         private View root;
         public MyViewHolder(View view) {
             super(view);
             root = view.findViewById(R.id.taskListRoot);
             tvTitle = view.findViewById(R.id.txtTaskListItemTitle);
+            tvTime = view.findViewById(R.id.txtTaskListItemTime);
+            ivPriority = view.findViewById(R.id.taskImg);
+            btnDelete = view.findViewById(R.id.deleteBtn);
+            btnEdit = view.findViewById(R.id.editBtn);
         }
 
         public View getRoot() {

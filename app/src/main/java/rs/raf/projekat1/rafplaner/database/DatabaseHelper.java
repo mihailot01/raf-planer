@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME="rafplaner.db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -31,8 +31,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 DatabaseModel.TaskEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
                 DatabaseModel.TaskEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
                 DatabaseModel.TaskEntry.COLUMN_DATE + " DATE NOT NULL, " +
-                DatabaseModel.TaskEntry.COLUMN_START_TIME + " TIME NOT NULL, " +
-                DatabaseModel.TaskEntry.COLUMN_END_TIME + " TIME NOT NULL, " +
+                DatabaseModel.TaskEntry.COLUMN_START_TIME + " INTEGER NOT NULL, " +
+                DatabaseModel.TaskEntry.COLUMN_END_TIME + " INTEGER NOT NULL, " +
                 DatabaseModel.TaskEntry.COLUMN_PRIORITY + " TEXT NOT NULL " +
                 ");";
 

@@ -11,6 +11,21 @@
     <string name="low">Nizak</string>
     <string name="medium">Srednji</string>
     <string name="high">Visok</string>
+    <string name="edit">Uredi</string>
+    <string name="title">Naziv</string>
+    <string name="description">Opis</string>
+    <string name="priority">Prioritet</string>
+    <string name="save">Sačuvaj</string>
+    <string name="cancel">Otkaži</string>
+
+    <string name="missing_title">Niste uneli naziv</string>
+    <string name="missing_description">Niste uneli opis</string>
+    <string name="invalid_tiime">Vreme kraja mora biti posle vremena početka</string>
+    <string name="overlaping_tasks">Uneto vreme se preklapa sa drugom obavezom</string>
+
+    <string name="are_you_sure">Da li ste sigurni?</string>
+    <string name="yes">Da</string>
+    <string name="no">Ne</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

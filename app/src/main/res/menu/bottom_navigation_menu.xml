@@ -4,16 +4,16 @@
 
     <item
         android:id="@+id/navigation_calendar"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_calendar_foreground"
         android:title="@string/calendar" />
     <item
         android:id="@+id/navigation_daily_plan"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_daily_plan_foreground"
         android:title="@string/daily_plan" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_profile_foreground"
         android:title="@string/profile" />
 
 </menu>

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import rs.raf.projekat1.rafplaner.HelperFunctions;
 import rs.raf.projekat1.rafplaner.model.Priority;
 import rs.raf.projekat1.rafplaner.model.Task;
 
@@ -35,9 +36,9 @@ public class DatabaseManager {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseModel.TaskEntry.COLUMN_TITLE, task.getTitle());
         contentValue.put(DatabaseModel.TaskEntry.COLUMN_DESCRIPTION, task.getDescription());
-        contentValue.put(DatabaseModel.TaskEntry.COLUMN_DATE, task.getDate().getTime());
-        contentValue.put(DatabaseModel.TaskEntry.COLUMN_START_TIME, task.getStartTime().getTime());
-        contentValue.put(DatabaseModel.TaskEntry.COLUMN_END_TIME, task.getEndTime().getTime());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_DATE, HelperFunctions.trimDate(task.getDate()).getTime());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_START_TIME, task.getStartTime());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_END_TIME, task.getEndTime());
         contentValue.put(DatabaseModel.TaskEntry.COLUMN_PRIORITY, task.getPriority().toString());
         database.insert(DatabaseModel.TaskEntry.TABLE_NAME, null, contentValue);
     }
@@ -79,8 +80,8 @@ public class DatabaseManager {
         String title = cursor.getString(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_TITLE));
         String description = cursor.getString(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_DESCRIPTION));
         Date date = new Date(cursor.getLong(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_DATE)));
-        Date startTime = new Date(cursor.getLong(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_START_TIME)));
-        Date endTime = new Date(cursor.getLong(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_END_TIME)));
+        int startTime = cursor.getInt(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_START_TIME));
+        int endTime = cursor.getInt(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_END_TIME));
         Priority priority = Priority.valueOf(cursor.getString(cursor.getColumnIndex(DatabaseModel.TaskEntry.COLUMN_PRIORITY)));
         Log.d("TEST", "getTaskFromCursor: "+title);
         return new Task(id, title, description, date, startTime, endTime, priority);
@@ -89,17 +90,17 @@ public class DatabaseManager {
     public void insertMockTasks(){
 
         List<Task> list = new ArrayList<>();
-        list.add(new Task(1,"low task", "description", new Date(), new Date(), new Date(), Priority.LOW));
-        list.add(new Task(2,"high task", "description2", new Date(), new Date(), new Date(), Priority.HIGH));
-        list.add(new Task(3,"low task 2", "description", new Date(), new Date(), new Date(), Priority.LOW));
-        list.add(new Task(4,"high task 2", "description2", new Date(), new Date(), new Date(), Priority.HIGH));
-        list.add(new Task(5,"medium task", "description", new Date(), new Date(), new Date(), Priority.MEDIUM));
+        list.add(new Task(1,"low task", "description", new Date(), 10,100, Priority.LOW));
+        list.add(new Task(3,"low task 2", "description", new Date(), 10,100, Priority.LOW));
+        list.add(new Task(2,"high task", "description2", new Date(), 10,100, Priority.HIGH));
+        list.add(new Task(4,"high task 2", "description2", new Date(), 10,100, Priority.HIGH));
+        list.add(new Task(5,"medium task", "description", new Date(), 10,100, Priority.MEDIUM));
         for(Task task : list){
             insertTask(task);
         }
     }
     public Task getTaskById(int id) {
-        Cursor cursor = database.query(DatabaseModel.TaskEntry.TABLE_NAME, null, "DatabaseModel.TaskEntry._ID = ?", new String[]{String.valueOf(id)}, null, null, null);
+        Cursor cursor = database.query(DatabaseModel.TaskEntry.TABLE_NAME, null, DatabaseModel.TaskEntry._ID+" = ?", new String[]{String.valueOf(id)}, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
         else
@@ -107,6 +108,40 @@ public class DatabaseManager {
 
         return getTaskFromCursor(cursor);
 
+    }
+
+    public List<Task> getTasksByDate(Date date) {
+        List<Task> list = new ArrayList<>();
+        Cursor cursor = database.query(DatabaseModel.TaskEntry.TABLE_NAME, null, DatabaseModel.TaskEntry.COLUMN_DATE+" = ?", new String[]{String.valueOf(HelperFunctions.trimDate(date).getTime())}, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        if (cursor == null || cursor.getCount() == 0)
+        {
+            return list;
+        }
+        cursor.moveToFirst();
+        do {
+            list.add(getTaskFromCursor(cursor));
+        }   while (cursor.moveToNext());
+
+        cursor.close();
+        return list;
+    }
+
+    public void deleteTask(int id) {
+        database.delete(DatabaseModel.TaskEntry.TABLE_NAME, DatabaseModel.TaskEntry._ID+" = ?", new String[]{String.valueOf(id)});
+    }
+
+    public void updateTask(Task task) {
+        ContentValues contentValue = new ContentValues();
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_TITLE, task.getTitle());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_DESCRIPTION, task.getDescription());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_DATE, HelperFunctions.trimDate(task.getDate()).getTime());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_START_TIME, task.getStartTime());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_END_TIME, task.getEndTime());
+        contentValue.put(DatabaseModel.TaskEntry.COLUMN_PRIORITY, task.getPriority().toString());
+        database.update(DatabaseModel.TaskEntry.TABLE_NAME, contentValue, DatabaseModel.TaskEntry._ID+" = ?", new String[]{String.valueOf(task.getId())});
     }
 
 }

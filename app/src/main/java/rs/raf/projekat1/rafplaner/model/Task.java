@@ -9,8 +9,8 @@ public class Task {
         private String title;
         private String description;
         private Date date;
-        private Date startTime;
-        private Date endTime;
+        private int startTime; // in minutes
+        private int endTime;
         private Priority priority;
 
         private int id;
@@ -18,7 +18,7 @@ public class Task {
         public Task() {
         }
 
-        public Task(int id, String title, String description, Date date, Date startTime, Date endTime, Priority priority) {
+        public Task(int id, String title, String description, Date date, int startTime, int endTime, Priority priority) {
                 this.id = id;
                 this.title = title;
                 this.description = description;
@@ -52,23 +52,23 @@ public class Task {
             this.date = date;
         }
 
-        public Date getStartTime() {
-            return startTime;
-        }
+    public int getStartTime() {
+        return startTime;
+    }
 
-        public void setStartTime(Date startTime) {
-            this.startTime = startTime;
-        }
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
 
-        public Date getEndTime() {
-            return endTime;
-        }
+    public int getEndTime() {
+        return endTime;
+    }
 
-        public void setEndTime(Date endTime) {
-            this.endTime = endTime;
-        }
+    public void setEndTime(int endTime) {
+        this.endTime = endTime;
+    }
 
-        public Priority getPriority() {
+    public Priority getPriority() {
             return priority;
         }
 

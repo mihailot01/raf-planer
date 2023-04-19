@@ -23,7 +23,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.33"
             android:text="@string/low"
-            android:backgroundTint="@color/lowPriority"/>
+            android:backgroundTint="@color/lowPriority"
+            android:layout_margin="5dp"/>
 
         <Button
             android:id="@+id/btnMediumPriority"
@@ -31,7 +32,9 @@
             android:layout_height="match_parent"
             android:layout_weight="0.33"
             android:text="@string/medium"
-            android:backgroundTint="@color/mediumPriority"/>
+            android:backgroundTint="@color/mediumPriority"
+            android:layout_margin="5dp"/>
+
 
         <Button
             android:id="@+id/btnHighPriority"
@@ -39,7 +42,9 @@
             android:layout_height="match_parent"
             android:layout_weight="0.33"
             android:text="@string/high"
-            android:backgroundTint="@color/highPriority"/>
+            android:backgroundTint="@color/highPriority"
+            android:layout_margin="5dp"/>
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -51,5 +56,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llPriority"
         tools:listitem="@layout/task_list_item" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAddTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_plus_foreground"
+        android:contentDescription="novo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_margin="16dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

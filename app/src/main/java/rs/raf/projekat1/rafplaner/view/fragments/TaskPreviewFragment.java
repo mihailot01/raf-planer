@@ -1,5 +1,6 @@
 package rs.raf.projekat1.rafplaner.view.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,11 +9,14 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.Date;
 
 import rs.raf.projekat1.rafplaner.AppModule;
 import rs.raf.projekat1.rafplaner.R;
-import rs.raf.projekat1.rafplaner.databinding.FragmentProfileBinding;
 import rs.raf.projekat1.rafplaner.databinding.FragmentTaskPreviewBinding;
+import rs.raf.projekat1.rafplaner.view.activities.TaskFormActivity;
 import rs.raf.projekat1.rafplaner.viewmodel.SingleTaskViewModel;
 import rs.raf.projekat1.rafplaner.viewmodel.TasksViewModel;
 
@@ -51,16 +55,27 @@ public class TaskPreviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        ViewModelProvider.Factory factory = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication());
-        TasksViewModel allTasksviewModel = new ViewModelProvider(requireActivity(),factory).get("tasks", TasksViewModel.class);
+        TasksViewModel allTasksviewModel = AppModule.getInstance(getActivity().getApplication()).getDailyTasksViewModel();
 
         taskViewModel = new ViewModelProvider(requireActivity()).get(SingleTaskViewModel.class);
-        taskViewModel.setTask(allTasksviewModel.getTasks().getValue().get(taskIndex));
+        taskViewModel.setTask(allTasksviewModel.getFilteredTasks().getValue().get(taskIndex));
 
+//        ((TextView) container.findViewById(R.id.tvTitle)).setText(taskViewModel.getTask().getValue().getTitle());
+        View view =  (ViewGroup) inflater.inflate(
+                R.layout.fragment_task_preview, container, false);
+        ((TextView) view.findViewById(R.id.tvTitle)).setText(taskViewModel.getTask().getValue().getTitle());
 
-        binding = FragmentTaskPreviewBinding.inflate(inflater, container, false);
-        binding.tvTitle.setText(taskViewModel.getTask().getValue().getTitle());
+        view.findViewById(R.id.btnEdit).setOnClickListener(v -> {
 
-        return binding.getRoot();
+            Intent intent = new Intent(getActivity(), TaskFormActivity.class);
+            intent.putExtra("task_id", taskViewModel.getTask().getValue().getId());
+            intent.putExtra("date", taskViewModel.getTask().getValue().getDate());
+            startActivity(intent);
+        });
+
+        return view;
+//        binding = FragmentTaskPreviewBinding.inflate(inflater, container, false);
+//        binding.tvTitle.setText(taskViewModel.getTask().getValue().getTitle());
+
     }
 }
