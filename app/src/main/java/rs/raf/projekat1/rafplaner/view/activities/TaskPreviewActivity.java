@@ -36,6 +36,10 @@ public class TaskPreviewActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_preview);
 
+//        AppModule.getInstance(getApplication()).getDailyTasksViewModel().getTasks().observe(this, tasks -> {
+//            pagerAdapter.notifyDataSetChanged();
+//        });
+
         index = getIntent().getIntExtra("task_index",0);
 //        tvTaskTitle = findViewById(R.id.tvTaskTitle);
 //        tvTaskTitle.setText("Task " + index);

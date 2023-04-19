@@ -39,6 +39,9 @@ public class HelperFunctions {
     }
 
     public static int getPriorityColor(Priority priority) {
+        if (priority == null) {
+            return R.color.gray;
+        }
         switch (priority) {
             case LOW:
                 return R.color.lowPriority;
@@ -47,6 +50,6 @@ public class HelperFunctions {
             case HIGH:
                 return R.color.highPriority;
         }
-        return R.color.lowPriority;
+        return R.color.gray;
     }
 }

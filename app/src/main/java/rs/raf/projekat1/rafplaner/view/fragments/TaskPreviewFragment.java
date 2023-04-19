@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,10 @@ public class TaskPreviewFragment extends Fragment {
     FragmentTaskPreviewBinding binding;
 
     private SingleTaskViewModel taskViewModel;
+    private TasksViewModel allTasksviewModel;
+
+
+    private TextView tvTitle;
     public TaskPreviewFragment() {
         // Required empty public constructor
     }
@@ -55,15 +60,23 @@ public class TaskPreviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        TasksViewModel allTasksviewModel = AppModule.getInstance(getActivity().getApplication()).getDailyTasksViewModel();
+        allTasksviewModel = AppModule.getInstance(getActivity().getApplication()).getDailyTasksViewModel();
 
+        Log.d("TEST", "onCreateView: TASK PREVIW FRAGMENT");
         taskViewModel = new ViewModelProvider(requireActivity()).get(SingleTaskViewModel.class);
         taskViewModel.setTask(allTasksviewModel.getFilteredTasks().getValue().get(taskIndex));
+
+        allTasksviewModel.getTasks().observe(getViewLifecycleOwner(), tasks -> {
+            taskViewModel.setTask(allTasksviewModel.getFilteredTasks().getValue().get(taskIndex));
+            initView();
+        });
+
 
 //        ((TextView) container.findViewById(R.id.tvTitle)).setText(taskViewModel.getTask().getValue().getTitle());
         View view =  (ViewGroup) inflater.inflate(
                 R.layout.fragment_task_preview, container, false);
-        ((TextView) view.findViewById(R.id.tvTitle)).setText(taskViewModel.getTask().getValue().getTitle());
+        tvTitle = view.findViewById(R.id.tvTitle);
+        tvTitle.setText(taskViewModel.getTask().getValue().getTitle());
 
         view.findViewById(R.id.btnEdit).setOnClickListener(v -> {
 
@@ -78,4 +91,19 @@ public class TaskPreviewFragment extends Fragment {
 //        binding.tvTitle.setText(taskViewModel.getTask().getValue().getTitle());
 
     }
+
+    private void initView(){
+        tvTitle.setText(taskViewModel.getTask().getValue().getTitle());
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        taskViewModel.setTask(allTasksviewModel.getFilteredTasks().getValue().get(taskIndex));
+        initView();
+    }
+
+
+
 }

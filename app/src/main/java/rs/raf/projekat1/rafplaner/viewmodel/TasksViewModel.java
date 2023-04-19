@@ -13,14 +13,8 @@ import java.util.List;
 import rs.raf.projekat1.rafplaner.AppModule;
 import rs.raf.projekat1.rafplaner.model.Task;
 
-public class TasksViewModel extends AndroidViewModel{
+public class TasksViewModel extends ViewModel{
 
-    public TasksViewModel(Application application) {
-        super(application);
-        dailyTasksLiveData.setValue(AppModule.getInstance(getApplication()).getDb().getAllTasks());
-        filteredTasksLiveData.setValue(AppModule.getInstance(getApplication()).getDb().getAllTasks());
-        Log.d("TEST", "TasksViewModel: " + AppModule.getInstance(getApplication()).getDb().getAllTasks().size());
-    }
     private final MutableLiveData<List<Task>> dailyTasksLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Task>> filteredTasksLiveData = new MutableLiveData<>();
 
@@ -43,10 +37,16 @@ public class TasksViewModel extends AndroidViewModel{
     }
 
     public void updateTask(Task task) {
-        for (int i = 0; i < dailyTasksLiveData.getValue().size(); i++) {
-            if (dailyTasksLiveData.getValue().get(i).getId() == task.getId()) {
-                dailyTasksLiveData.getValue().set(i, task);
-                dailyTasksLiveData.setValue(dailyTasksLiveData.getValue());
+        updateInList(dailyTasksLiveData, task);
+        updateInList(filteredTasksLiveData, task);
+
+    }
+
+    private void updateInList(MutableLiveData<List<Task>> list, Task task){
+        for (int i = 0; i < list.getValue().size(); i++) {
+            if (list.getValue().get(i).getId() == task.getId()) {
+                list.getValue().set(i, task);
+                list.setValue(list.getValue());
                 return;
             }
         }

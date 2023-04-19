@@ -24,6 +24,10 @@
     <string name="overlaping_tasks">Uneto vreme se preklapa sa drugom obavezom</string>
 
     <string name="are_you_sure">Da li ste sigurni?</string>
+
+    <string name="show_past">Prikaži prošle obaveze</string>
+    <string name="search">Pretraži</string>
+
     <string name="yes">Da</string>
     <string name="no">Ne</string>
     <!-- TODO: Remove or change this placeholder text -->

@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -52,7 +53,7 @@ public class TaskFormActivity extends AppCompatActivity {
 
         taskId = getIntent().getIntExtra("task_id", -1);
         date = (Date) getIntent().getSerializableExtra("date");
-
+        date = HelperFunctions.trimDate(date);
         initViewModel();
 
 //        Snackbar.make(findViewById(R.id.form_root), taskFormViewModel.getTitle(), Snackbar.LENGTH_LONG)
@@ -144,7 +145,8 @@ public class TaskFormActivity extends AppCompatActivity {
         task.setDescription(taskFormViewModel.getDescription());
         task.setStartTime(taskFormViewModel.getStartTimeHour()*60 + taskFormViewModel.getStartTimeMinute());
         task.setEndTime(taskFormViewModel.getEndTimeHour()*60 + taskFormViewModel.getEndTimeMinute());
-        task.setDate(date);
+//        if(taskId==-1)
+            task.setDate(date);
         task.setPriority(taskFormViewModel.getPriority());
         return task;
     }
@@ -177,6 +179,7 @@ public class TaskFormActivity extends AppCompatActivity {
     }
 
     private boolean validate(){
+        Log.d("TEST", "validate: ID "+ taskId);
         if(taskFormViewModel.getTitle().isEmpty()){
             makeToast(this.getString(R.string.missing_title));
             return false;
@@ -197,6 +200,8 @@ public class TaskFormActivity extends AppCompatActivity {
         for(Task task : tasks){
             if(task.getId() == taskId)
                 continue;
+            Log.d("TEST", "validate: ID 22  "+ task.getId());
+            Log.d("TEST", "validate: ID 22  "+ date);
             int startTime = taskFormViewModel.getStartTimeHour()*60 + taskFormViewModel.getStartTimeMinute();
             int endTime = taskFormViewModel.getEndTimeHour()*60 + taskFormViewModel.getEndTimeMinute();
             if(startTime >= task.getStartTime() && startTime < task.getEndTime()){

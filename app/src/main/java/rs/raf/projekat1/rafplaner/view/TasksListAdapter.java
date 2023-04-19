@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public abstract class TasksListAdapter extends ListAdapter<Task, TasksListAdapte
                         @NonNull Task oldTask, @NonNull Task newTask) {
                     // NOTE: if you use equals, your object must properly override Object#equals()
                     // Incorrectly returning false here will result in too many animations.
+                    //return false;
                     return oldTask.equals(newTask);
                 }
             };
@@ -72,6 +74,12 @@ public abstract class TasksListAdapter extends ListAdapter<Task, TasksListAdapte
         holder.ivPriority.setImageTintList(null);
         holder.ivPriority.setImageTintList(ColorStateList.valueOf(res.getColor(HelperFunctions.getPriorityColor(task.getPriority()))));
         holder.ivPriority.setBackgroundTintList(ColorStateList.valueOf(HelperFunctions.getPriorityColor(task.getPriority())));
+
+        holder.root.setBackgroundColor(res.getColor(R.color.white));
+        if(task.isFinished())
+            holder.root.setBackgroundColor(res.getColor(R.color.gray));
+//            holder.root.setBackgroundTintList(ColorStateList.valueOf(res.getColor(R.color.gray)));
+
         holder.getRoot().setOnClickListener(v -> {
             this.onTaskClick(task);
         });

@@ -4,6 +4,8 @@ import java.sql.Time;
 import java.util.Date;
 import java.util.Objects;
 
+import rs.raf.projekat1.rafplaner.HelperFunctions;
+
 public class Task {
 
         private String title;
@@ -49,7 +51,7 @@ public class Task {
         }
 
         public void setDate(Date date) {
-            this.date = date;
+            this.date = HelperFunctions.trimDate(date);
         }
 
     public int getStartTime() {
@@ -72,28 +74,32 @@ public class Task {
             return priority;
         }
 
-        public void setPriority(Priority priority) {
-            this.priority = priority;
-        }
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
 
-        public int getId() {
-            return id;
-        }
+    public int getId() {
+        return id;
+    }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Task task = (Task) o;
-            return id == task.id && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(date, task.date) && Objects.equals(startTime, task.startTime) && Objects.equals(endTime, task.endTime) && priority == task.priority;
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(date, task.date) && Objects.equals(startTime, task.startTime) && Objects.equals(endTime, task.endTime) && priority == task.priority;
+    }
 
-        @Override
-        public int hashCode() {
-            return Objects.hash(title, description, date, startTime, endTime, priority, id);
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description, date, startTime, endTime, priority, id);
+    }
+
+    public boolean isFinished(){
+        return new Date().after(new Date(date.getTime() + (long) endTime *60*1000));
+    }
 }
