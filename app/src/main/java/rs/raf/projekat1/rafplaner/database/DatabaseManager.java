@@ -41,7 +41,7 @@ public class DatabaseManager {
         contentValue.put(DatabaseModel.TaskEntry.COLUMN_START_TIME, task.getStartTime());
         contentValue.put(DatabaseModel.TaskEntry.COLUMN_END_TIME, task.getEndTime());
         contentValue.put(DatabaseModel.TaskEntry.COLUMN_PRIORITY, task.getPriority().toString());
-        database.insert(DatabaseModel.TaskEntry.TABLE_NAME, null, contentValue);
+        task.setId( (int) database.insert(DatabaseModel.TaskEntry.TABLE_NAME, null, contentValue));
     }
 
 
@@ -105,6 +105,9 @@ public class DatabaseManager {
         if (cursor != null)
             cursor.moveToFirst();
         else
+            return null;
+
+        if(cursor.getCount() == 0)
             return null;
 
         return getTaskFromCursor(cursor);

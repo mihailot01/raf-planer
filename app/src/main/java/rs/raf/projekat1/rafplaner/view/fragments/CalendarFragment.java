@@ -112,7 +112,7 @@ public class CalendarFragment extends Fragment {
         rvCalendar.setAdapter(adapter);
 
         if(lang.equals("sr"))
-            lang = "sr-Latn-RS";
+            lang = "sh";
 
         rvCalendar.getLayoutManager().scrollToPosition(todayPosition);
         tvMonth.setText(data[500].getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale(lang))+" "+data[500].get(Calendar.YEAR));
