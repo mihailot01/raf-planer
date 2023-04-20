@@ -52,4 +52,25 @@ public class HelperFunctions {
         }
         return R.color.gray;
     }
+
+    public static boolean checkPasswordRequirements(String password){
+
+        if(password.length() < 5){
+            return false;
+        }
+        //check if password contains a digit
+        if(!password.matches(".*\\d.*")){
+            return false;
+        }
+        //check if password contains a uppercase letter
+        if(!password.matches(".*[A-Z].*")){
+            return false;
+        }
+        //check if password doesn't contain a special character
+        if(password.matches(".*[!@#$%^&*()_+].*")){
+            return false;
+        }
+
+        return true;
+    }
 }

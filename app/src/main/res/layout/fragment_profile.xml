@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profileRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.fragments.ProfileFragment">
@@ -12,16 +13,71 @@
         android:gravity="center"
         android:layout_margin="20dp">
 
+        <ImageView
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:src="@drawable/ic_profile_foreground"
+            />
+
         <TextView
+            android:id="@+id/tvProfileUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment" />
+            android:gravity="center" />
 
+        <TextView
+            android:id="@+id/tvProfileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="150dp"/>
+
+
+        <Button
+            android:id="@+id/btnChangePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/change_password"
+            android:padding="6dp"/>
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/logout" />
+            android:text="@string/logout"
+            android:backgroundTint ="@color/colorDecline"
+            android:padding="6dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="top|right"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/btnSr"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="0dp"
+            android:src="@mipmap/ic_serbia_foreground"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageButton
+            android:id="@+id/btnEn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="0dp"
+            android:src="@mipmap/ic_uk_foreground"
+            android:scaleType="fitCenter"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:text="@string/application_language"/>
 
     </LinearLayout>
 </FrameLayout>

@@ -64,6 +64,19 @@ public class TaskFormActivity extends AppCompatActivity {
 
         initView();
         intiListeners(binding);
+
+        Log.d("TEST", "onCreate FORM: "+taskFormViewModel.getPriority());
+        switch (taskFormViewModel.getPriority()) {
+            case LOW:
+                btnLow.callOnClick();
+                break;
+            case MEDIUM:
+                btnMedium.callOnClick();
+                break;
+            case HIGH:
+                btnHigh.callOnClick();
+                break;
+        }
     }
 
     private void initViewModel() {
@@ -78,6 +91,8 @@ public class TaskFormActivity extends AppCompatActivity {
             taskFormViewModel.setStartTimeMinute(task.getStartTime()%60);
             taskFormViewModel.setEndTimeHour(task.getEndTime()/60);
             taskFormViewModel.setEndTimeMinute(task.getEndTime()%60);
+            taskFormViewModel.setPriority(task.getPriority());
+            Log.d("TEST", "initViewModel: " + task.getPriority());
         }
         else {
             task = new Task();
@@ -115,6 +130,7 @@ public class TaskFormActivity extends AppCompatActivity {
         });
         btnLow.setOnClickListener(v -> {
             taskFormViewModel.setPriority(Priority.LOW);
+            Log.d("TEST", "intiListeners: LOW");
             btnLow.setAlpha(1);
             btnMedium.setAlpha(0.3f);
             btnHigh.setAlpha(0.3f);
@@ -131,8 +147,6 @@ public class TaskFormActivity extends AppCompatActivity {
             btnMedium.setAlpha(0.3f);
             btnHigh.setAlpha(1);
         });
-
-        btnLow.callOnClick();
     }
 
 

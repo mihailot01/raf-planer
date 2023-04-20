@@ -84,6 +84,7 @@ public class DailyPlanFragment extends Fragment {
         if (getArguments() != null) {
             date = (Date) getArguments().getSerializable(ARG_DATE);
         }
+        //initViewModel();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -116,7 +117,7 @@ public class DailyPlanFragment extends Fragment {
 
             @Override
             public void onDeleteClick(Task task) {
-                DialogInterface.OnClickListener dialogClickListener = new DeleteDialogClickListener(application,task);
+                DialogInterface.OnClickListener dialogClickListener = new DeleteDialogClickListener(application,task,null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(context.getString(R.string.are_you_sure)).setPositiveButton(context.getString(R.string.yes), dialogClickListener)
                         .setNegativeButton(context.getString(R.string.no), dialogClickListener).show();
@@ -268,6 +269,7 @@ public class DailyPlanFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d("TEST", "onResume: ");
+        initViewModel();
         this.updateList();
         this.setButtonsAlpha();
     }

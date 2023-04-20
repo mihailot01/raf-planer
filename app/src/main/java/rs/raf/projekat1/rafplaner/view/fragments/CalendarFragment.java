@@ -3,6 +3,7 @@ package rs.raf.projekat1.rafplaner.view.fragments;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -105,12 +106,17 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getActivity().getPackageName(), Context.MODE_PRIVATE);
+        String lang = sharedPreferences.getString("language", "sr");
 //        adapter.setClickListener(this);
         rvCalendar.setAdapter(adapter);
 
+        if(lang.equals("sr"))
+            lang = "sr-Latn-RS";
+
         rvCalendar.getLayoutManager().scrollToPosition(todayPosition);
-        tvMonth.setText(data[500].getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.forLanguageTag("sr-Latn-RS"))+" "+data[500].get(Calendar.YEAR));
+        tvMonth.setText(data[500].getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale(lang))+" "+data[500].get(Calendar.YEAR));
+        String finalLang = lang;
         rvCalendar.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -121,7 +127,7 @@ public class CalendarFragment extends Fragment {
                 int totalItemCount = rvCalendar.getLayoutManager().getItemCount();
                 int firstVisibleItem = ((GridLayoutManager) rvCalendar.getLayoutManager()).findFirstVisibleItemPosition();
                 Log.d("TEST", "onScrolled: "+visibleItemCount+" "+totalItemCount+" "+firstVisibleItem);
-                tvMonth.setText(data[firstVisibleItem].getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.forLanguageTag("sr-Latn-RS"))+" "+data[firstVisibleItem].get(Calendar.YEAR));
+                tvMonth.setText(data[firstVisibleItem].getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale(finalLang))+" "+data[firstVisibleItem].get(Calendar.YEAR));
 
 //                visibleItemCount = rvCalendar.getChildCount();
 

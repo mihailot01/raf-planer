@@ -15,6 +15,7 @@ import java.util.List;
 import rs.raf.projekat1.rafplaner.HelperFunctions;
 import rs.raf.projekat1.rafplaner.model.Priority;
 import rs.raf.projekat1.rafplaner.model.Task;
+import rs.raf.projekat1.rafplaner.model.User;
 
 public class DatabaseManager {
 
@@ -142,6 +143,34 @@ public class DatabaseManager {
         contentValue.put(DatabaseModel.TaskEntry.COLUMN_END_TIME, task.getEndTime());
         contentValue.put(DatabaseModel.TaskEntry.COLUMN_PRIORITY, task.getPriority().toString());
         database.update(DatabaseModel.TaskEntry.TABLE_NAME, contentValue, DatabaseModel.TaskEntry._ID+" = ?", new String[]{String.valueOf(task.getId())});
+    }
+
+    @SuppressLint("Range")
+    private User getUserFromCursor(Cursor cursor){
+        String username = cursor.getString(cursor.getColumnIndex(DatabaseModel.UserEntry.COLUMN_USERNAME));
+        String email = cursor.getString(cursor.getColumnIndex(DatabaseModel.UserEntry.COLUMN_EMAIL));
+        String password = cursor.getString(cursor.getColumnIndex(DatabaseModel.UserEntry.COLUMN_PASSWORD));
+        return new User(username, email, password);
+    }
+
+    public User getUser(String username) {
+        Cursor cursor = database.query(DatabaseModel.UserEntry.TABLE_NAME, null, DatabaseModel.UserEntry.COLUMN_USERNAME+" = ?", new String[]{username}, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        if (cursor == null || cursor.getCount() == 0)
+        {
+            return null;
+        }
+        cursor.moveToFirst();
+
+        return getUserFromCursor(cursor);
+    }
+
+    public void updateUserPassword(String username, String password) {
+        ContentValues contentValue = new ContentValues();
+        contentValue.put(DatabaseModel.UserEntry.COLUMN_PASSWORD, password);
+        database.update(DatabaseModel.UserEntry.TABLE_NAME, contentValue, DatabaseModel.UserEntry.COLUMN_USERNAME+" = ?", new String[]{username});
     }
 
 }

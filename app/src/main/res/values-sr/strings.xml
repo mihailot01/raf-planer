@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Raf planer</string>
+    <string name="login">Prijavi se</string>
+    <string name="logout">Odjavi se</string>
+    <string name="change_password">Promeni lozinku</string>
+    <string name="old_password">Stara lozinka</string>
+    <string name="new_password">Nova lozinka</string>
+    <string name="invalid_credentials">Neispravni podaci za logovanje</string>
+    <string name="invalid_password">Lozinka mora biti dugačka bar 5 karaktera, mora sadržati bar jedno veliko slovo, jedan broj i ne sme sadržati specijalne karaktere</string>
+    <string name="passwords_dont_match">Lozinke se ne poklapaju</string>
+    <string name="invalid_old_password">Stara lozinka nije ispravna</string>
+    <string name="password_changed">Lozinka uspešno promenjena</string>
+    <string name="required_field">Polje je obavezno</string>
+    <string name="password">Lozinka</string>
+    <string name="username">Korisničko ime</string>
+    <string name="email">Email</string>
+    <string name="calendar">Kalendar</string>
+    <string name="daily_plan">Dnevni plan</string>
+    <string name="profile">Profil</string>
+    <string name="low">Nizak</string>
+    <string name="medium">Srednji</string>
+    <string name="high">Visok</string>
+    <string name="edit">Uredi</string>
+    <string name="delete">Obriši</string>
+    <string name="title">Naziv</string>
+    <string name="description">Opis</string>
+    <string name="priority">Prioritet</string>
+    <string name="save">Sačuvaj</string>
+    <string name="cancel">Otkaži</string>
+
+    <string name="missing_title">Niste uneli naziv</string>
+    <string name="missing_description">Niste uneli opis</string>
+    <string name="invalid_tiime">Vreme kraja mora biti posle vremena početka</string>
+    <string name="overlaping_tasks">Uneto vreme se preklapa sa drugom obavezom</string>
+
+    <string name="are_you_sure">Da li ste sigurni?</string>
+
+    <string name="show_past">Prikaži prošle obaveze</string>
+    <string name="search">Pretraži</string>
+
+    <string name="yes">Da</string>
+    <string name="no">Ne</string>
+
+    <string name="application_language">Jezik aplikacije</string>
+</resources>
